@@ -101,8 +101,8 @@ jobs:
       with:
         languages: cpp
         queries: security-and-quality,
-          github/codeql-coding-standards/c/cert/src/codeql-suites/cert-default.qls,
-          codeql-coding-standards/c/misra/src/codeql-suites/misra-default.qls
+          github/codeql-coding-standards/c/cert/src/codeql-suites/cert-default.qls@main,
+          codeql-coding-standards/c/misra/src/codeql-suites/misra-default.qls@main
 
     - name: Build projects
       working-directory: Project
