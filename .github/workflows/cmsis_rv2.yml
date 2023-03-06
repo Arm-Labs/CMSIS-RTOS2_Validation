@@ -21,6 +21,8 @@ jobs:
 
     env:
       CMSIS_PACK_ROOT: /tmp/.packs-${{ github.run_id }}
+      AC6_TOOLCHAIN_6_18_0: /opt/armcompiler/bin
+      GCC_TOOLCHAIN_11_2_0: /opt/gcc-arm-11.2-2022.02-x86_64-arm-none-eabi/bin
 
     permissions:
       id-token: write
@@ -73,6 +75,7 @@ jobs:
     - name: Build and run projects
       working-directory: Project
       run: |
+        source /etc/profile.d/avh.sh
         python build.py --verbose build run || echo "Something failed!"
 
     - name: Archive results
