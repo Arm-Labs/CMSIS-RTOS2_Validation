@@ -85,7 +85,7 @@ jobs:
         python build.py --verbose build run || echo "Something failed!"
 
     - name: Archive results
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: results
         path: |
