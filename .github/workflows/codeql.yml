@@ -101,6 +101,7 @@ jobs:
       with:
         languages: cpp
         queries: security-and-quality
+        packs: codeql/misra-c-coding-standards, codeql/cert-c-coding-standards
 
     - name: Build projects
       working-directory: Project
