@@ -33,6 +33,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Checkout CMSIS repository
+      uses: actions/checkout@v3
+      with:
+        repository: ARM-software/CMSIS_5
+        ref: develop
+        path: CMSIS_5
+
     - name: Install CMake
       run: |
         wget https://github.com/Kitware/CMake/releases/download/v3.25.1/cmake-3.25.1-linux-x86_64.tar.gz
@@ -69,6 +76,21 @@ jobs:
       if: steps.cache-packs.outputs.cache-hit == 'true'
       run: cpackget update-index
 
+    - name: Register local CMSIS pack
+      run: |
+        mkdir -p ${CMSIS_PACK_ROOT}/.Local
+        cat > ${CMSIS_PACK_ROOT}/.Local/local_repository.pidx <<EOF
+        <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+        <index schemaVersion="1.1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PackIndex.xsd">
+          <vendor>local repository</vendor>
+          <url>file://localhost/${CMSIS_PACK_ROOT}</url>
+          <timestamp>2022-12-19T11:18:37</timestamp>
+          <pindex>
+            <pdsc vendor="ARM" name="CMSIS" url="file://localhost/${GITHUB_WORKSPACE}/CMSIS_5" version="5.9.1"/>
+          </pindex>
+        </index>
+        EOF
+
     - name: Install build.py requirements
       run: pip install -r requirements.txt
       working-directory: Project
@@ -91,7 +113,7 @@ jobs:
     - name: Archive sarif report
       uses: actions/upload-artifact@v3
       with:
-        path: results/cpp.sarif
+        path: ${{ github.workspace }}/results/cpp.sarif
         retention-days: 1
         if-no-files-found: error
       if: always()
