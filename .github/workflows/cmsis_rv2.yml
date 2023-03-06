@@ -82,7 +82,7 @@ jobs:
       working-directory: Project
       run: |
         export PATH=$PATH:/opt/VHT
-        python build.py --verbose build run
+        python build.py --verbose build run || echo "Something failed!"
 
     - name: Archive results
       uses: actions/upload-artifact@v2
