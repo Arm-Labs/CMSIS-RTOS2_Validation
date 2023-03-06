@@ -83,7 +83,7 @@ jobs:
     - name: Build projects
       working-directory: Project
       run: |
-        python build.py --verbose -c AC6 -r RTX5 -d CM3 build || echo "Something failed!"
+        python build.py --verbose -c GCC -r RTX5 -d CM3 build
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2
